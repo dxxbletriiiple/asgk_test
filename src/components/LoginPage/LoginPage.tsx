@@ -22,7 +22,8 @@ export const LoginPage = (): JSX.Element => {
 		fetch('https://api.asgk-group.ru/test-auth-only', requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
-				// setToken(data);
+				console.log(data);
+				setToken(data);
 				x(data.auth_token);
 			});
 
@@ -33,18 +34,35 @@ export const LoginPage = (): JSX.Element => {
 		function x(data: string) {
 			const asd = {
 				method: 'GET',
-				'Content-Type': 'application/json',
-				// prettier-ignore
-				'Authorization': 'Основной ключ авторизации API',
+				headers: {
+					'Content-Type': 'application/json',
+					// prettier-ignore
+					'Authorization': data,
+				},
 			};
 
 			// cards.asgk-group.ru/accounts/zxcpoi
-			fetch(`https://api.asgk-group.ru/v1/${data}/passes/`)
+			fetch(`https://api.asgk-group.ru/v1/authorization`, asd)
 				.then((res) => res.json())
-				.then((r) => console.log(r))
+				.then((r) => cards(data, r.tokens[0].token))
 				.catch((err: Error) => {
 					console.log(err);
 				});
+		}
+
+		function cards(key: string, token: string) {
+			const asd = {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					// prettier-ignore
+					'Authorization': key,
+				},
+			};
+			console.log('key = ', key, 'token = ', token);
+			fetch(`https://api.asgk-group.ru/v1/${token}/passes`, asd)
+				.then((r) => r.json())
+				.then(console.log);
 		}
 	};
 	return (
