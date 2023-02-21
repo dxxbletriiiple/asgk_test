@@ -1,20 +1,20 @@
-import { UserListItem } from '../UserListItem/UserListItem';
+import { useState, useEffect } from 'react';
+import { IUSer } from 'components/UserListItem/UserListItem.interface';
 import { IThData } from './UserList.interface';
+import { UserListItem } from '../UserListItem/UserListItem';
 import styles from './UserList.module.scss';
 
 export const UserList = (): JSX.Element => {
-	const x = {
-		birthday: '01.01.1990',
-		bonus: '100',
-		createdAt: '16.01.2023',
-		discount: '0.1',
-		email: 'o@outlook.com',
-		lastName: 'Некрасов',
-		middleName: 'Агафонович',
-		name: 'Севастьян',
-		phone: '79303709018',
-		userId: 953237,
-	};
+	const [data, setData] = useState<IUSer>();
+
+	useEffect(() => {}, []);
+
+	/* 	const handleSort = () => {
+		setdata((prev) => {
+			console.log(data.sort((a, b) => a.userId - b.userId));
+			return data.sort((a, b) => a.userId - b.userId);
+		});
+	}; */
 	const thData: IThData[] = [
 		{
 			name: 'id',
@@ -57,6 +57,20 @@ export const UserList = (): JSX.Element => {
 			text: 'Дата создания',
 		},
 	];
+	const InputEl = (data: IThData): JSX.Element => {
+		return (
+			<td>
+				<input
+					type='radio'
+					name='sort'
+					id={data.name}
+					// onChange={(e: React.FormEvent<HTMLInputElement>) => void}
+				/>
+				<label htmlFor={data.name}>{data.text}</label>
+			</td>
+		);
+	};
+
 	return (
 		<>
 			<table className={styles['user-list']}>
@@ -68,22 +82,10 @@ export const UserList = (): JSX.Element => {
 					</tr>
 				</thead>
 				<tbody>
-					<UserListItem user={x} />
-					<UserListItem user={x} />
-					<UserListItem user={x} />
-					<UserListItem user={x} />
-					<UserListItem user={x} />
+					{/* <UserListItem user={x[0]} />
+					<UserListItem user={x[1]} /> */}
 				</tbody>
 			</table>
 		</>
-	);
-};
-
-const InputEl = ({ name, text }: IThData): JSX.Element => {
-	return (
-		<td>
-			<input type='radio' name='sort' id={name} />
-			<label htmlFor={name}>{text}</label>
-		</td>
 	);
 };

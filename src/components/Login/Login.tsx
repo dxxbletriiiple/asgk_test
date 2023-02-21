@@ -1,15 +1,13 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { ApiService } from '../../services/ApiService';
-import './LoginPage.scss';
+import './Login.scss';
 
 type FormFields = {
 	login: HTMLInputElement;
 	password: HTMLInputElement;
 };
 
-export const LoginPage = (): JSX.Element => {
-	const [token, setToken] = useState('');
-
+export const Login = (): JSX.Element => {
 	const apiData = new ApiService();
 	const handleSubmit = (e: FormEvent<HTMLFormElement & FormFields>) => {
 		e.preventDefault();
@@ -17,9 +15,9 @@ export const LoginPage = (): JSX.Element => {
 		const password: string = e.currentTarget.password.value;
 
 		if (login.trim() && password.trim()) {
+			apiData.getAuthKey(login, password);
 			e.currentTarget.reset();
 		}
-		apiData.getAuthKey(login, password);
 	};
 	return (
 		<>

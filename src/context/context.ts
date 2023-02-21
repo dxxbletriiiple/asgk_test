@@ -1,17 +1,12 @@
+import { IUSer } from '../components/UserListItem/UserListItem.interface';
 import { createContext } from 'react';
 
 export interface IContext {
-	isLogged: boolean;
-	authKey: string;
-	authToken: string;
-	cards: any[];
-	setCards: (arg: any) => void;
+	cards: IUSer[];
+	onChangeState?: (arg: any) => void;
 }
 
-export const context = createContext<IContext>({
-	isLogged: false,
-	authKey: '',
-	authToken: '',
+export const cardsContext = createContext<IContext>({
 	cards: [],
-	setCards: () => void {},
+	onChangeState: (arg: any) => {},
 });

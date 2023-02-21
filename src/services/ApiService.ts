@@ -1,16 +1,22 @@
-export class ApiService {
-	_baseUrl = 'https://api.asgk-group.ru/';
+import { IUSer } from '../components/UserListItem/UserListItem.interface';
 
-	getAuthKey = async (login: string, password: string) => {
+export class ApiService {
+	_baseUrl: string = 'https://api.asgk-group.ru/';
+	_authKey: string = '';
+	_authToken: string = '';
+
+	getAuthKey = async (login: string = 'asd', password: string = 'adsads') => {
 		const requestOptions = {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ login: login, password: password }),
+			body: JSON.stringify({ login, password }),
 		};
 
 		fetch(`${this._baseUrl}test-auth-only`, requestOptions)
 			.then((response) => response.json())
-			.then((data) => this.getAuthToken(data?.auth_token));
+			.then((data) => {
+				this._authKey = data?.auth_token;
+				this.getAuthToken(this._authKey);
+			});
 	};
 
 	getAuthToken = async (data: string) => {
@@ -26,29 +32,31 @@ export class ApiService {
 		fetch(`${this._baseUrl}v1/authorization`, params)
 			.then((res) => res.json())
 			.then((r) => {
-				this.getCards(data, r.tokens[0].token);
+				this._authToken = r.tokens[0].token;
+				this.getCards();
 			})
 			.catch((err: Error) => {
-				console.error(err);
+				//! TODO authorization
 			});
 	};
 
-	getCards = async (key: string, token: string) => {
+	getCards = async () => {
 		const params = {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 				// prettier-ignore
-				'Authorization': key,
+				'Authorization': this._authKey,
 			},
 		};
-		const res = await fetch(`${this._baseUrl}/v1/${token}/passes`, params).then((r) => r.json());
+		const res = await fetch(`${this._baseUrl}/v1/${this._authToken}/passes`, params).then((r) => r.json());
 
 		const arr = await res.passes.map(this._tarnsformCard);
 		console.log(arr);
+		return arr;
 	};
 
-	_tarnsformCard = (card: any) => {
+	_tarnsformCard = (card: any): IUSer => {
 		return {
 			userId: card.user_id,
 			name: card.first_name,
