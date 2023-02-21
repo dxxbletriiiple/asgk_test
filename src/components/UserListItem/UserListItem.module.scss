@@ -1,0 +1,29 @@
+.list-item {
+	list-style: none;
+	display: grid;
+	grid-template-rows: 50px;
+	grid-template-columns: repeat(10, minmax(150px, 1fr));
+	column-gap: 2px;
+	border: 1px solid white;
+	background-color: white;
+}
+
+span {
+	border-bottom: none;
+	background-color: #242424;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+@media (prefers-color-scheme: light) {
+	.list-item {
+		background-color: #242424;
+	}
+	span {
+		background-color: white;
+	}
+}

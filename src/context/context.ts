@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface IContext {
+export interface IContext {
 	isLogged: boolean;
 	authKey: string;
 	authToken: string;

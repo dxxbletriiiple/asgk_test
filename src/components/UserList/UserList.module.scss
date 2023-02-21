@@ -1,0 +1,6 @@
+.user-list {
+	list-style-type: none;
+	display: grid;
+	grid-template-rows: 50px;
+	grid-template-columns: repeat(10, minmax(150px, 1fr));
+}

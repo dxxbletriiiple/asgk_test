@@ -1,16 +1,22 @@
 import { useState } from 'react';
-import { context } from './context/context';
+import { context, IContext } from './context/context';
 import './App.scss';
 import { LoginPage } from './components/LoginPage/LoginPage';
+import { UserList } from './components/UserList/UserList';
 
 const { Provider } = context;
 function App() {
-	const [state, setState] = useState({});
+	/*const [state, setState] = useState<IContext>({});
+	 const onCHangeState = (st: any) => {
+		setState(st);
+	}; */
+
 	return (
 		<div className='App'>
-			<Provider value={(state, setState)}>
-				<LoginPage />
-			</Provider>
+			{/* <Provider value={(state, onCHangeState)}> */}
+			<LoginPage />
+			{/* </Provider> */}
+			<UserList />
 		</div>
 	);
 }
