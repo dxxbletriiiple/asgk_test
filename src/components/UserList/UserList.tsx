@@ -1,4 +1,5 @@
 import { UserListItem } from '../UserListItem/UserListItem';
+import { IThData } from './UserList.interface';
 import styles from './UserList.module.scss';
 
 export const UserList = (): JSX.Element => {
@@ -14,51 +15,56 @@ export const UserList = (): JSX.Element => {
 		phone: '79303709018',
 		userId: 953237,
 	};
+	const thData: IThData[] = [
+		{
+			name: 'id',
+			text: 'id',
+		},
+		{
+			name: 'name',
+			text: 'Имя',
+		},
+		{
+			name: 'lastname',
+			text: 'Фамилия',
+		},
+		{
+			name: 'middlename',
+			text: 'Отчество',
+		},
+		{
+			name: 'birthday',
+			text: 'Дата рождения',
+		},
+		{
+			name: 'email',
+			text: 'Email',
+		},
+		{
+			name: 'tel',
+			text: 'Тел',
+		},
+		{
+			name: 'bonus',
+			text: 'Бонусы',
+		},
+		{
+			name: 'discount',
+			text: 'Скидка %',
+		},
+		{
+			name: 'created',
+			text: 'Дата создания',
+		},
+	];
 	return (
 		<>
 			<table className={styles['user-list']}>
 				<thead>
 					<tr>
-						<td>
-							<input type='radio' name='sort' id='id' />
-							<label htmlFor='id'>id</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='name' />
-							<label htmlFor='name'>Имя</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='lastname' />
-							<label htmlFor='lastname'>Фамилия</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='middlename' />
-							<label htmlFor='middlename'>Отчество</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='birthday' />
-							<label htmlFor='birthday'>Дата рождения</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='email' />
-							<label htmlFor='email'>Email</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='tel' />
-							<label htmlFor='tel'>Тел</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='bonus' />
-							<label htmlFor='bonus'>Бонусы</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='discount' />
-							<label htmlFor='discount'>Скидка %</label>
-						</td>
-						<td>
-							<input type='radio' name='sort' id='created' />
-							<label htmlFor='created'>Дата создания</label>
-						</td>
+						{thData.map((i) => (
+							<InputEl {...i} key={i.name} />
+						))}
 					</tr>
 				</thead>
 				<tbody>
@@ -70,5 +76,14 @@ export const UserList = (): JSX.Element => {
 				</tbody>
 			</table>
 		</>
+	);
+};
+
+const InputEl = ({ name, text }: IThData): JSX.Element => {
+	return (
+		<td>
+			<input type='radio' name='sort' id={name} />
+			<label htmlFor={name}>{text}</label>
+		</td>
 	);
 };
