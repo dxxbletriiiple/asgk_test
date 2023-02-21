@@ -42,8 +42,24 @@ export class ApiService {
 				'Authorization': key,
 			},
 		};
-		fetch(`${this._baseUrl}/v1/${token}/passes`, params)
-			.then((r) => r.json())
-			.then(console.log);
+		const res = await fetch(`${this._baseUrl}/v1/${token}/passes`, params).then((r) => r.json());
+
+		const arr = await res.passes.map(this._tarnsformCard);
+		console.log(arr[0]);
+	};
+
+	_tarnsformCard = (card: any) => {
+		return {
+			userId: card.user_id,
+			name: card.first_name,
+			lastName: card.last_name,
+			middleName: card.pat_name,
+			birthday: card.birthday,
+			email: card.email,
+			phone: card.phone,
+			bonus: card.bonus,
+			discount: card.discount,
+			createdAt: new Intl.DateTimeFormat('ru-RU').format(new Date(card.created_at)),
+		};
 	};
 }
