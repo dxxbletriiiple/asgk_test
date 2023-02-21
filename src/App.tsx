@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { context, IContext } from './context/context';
+import { context } from './context/context';
 import './App.scss';
 import { LoginPage } from './components/LoginPage/LoginPage';
 import { UserList } from './components/UserList/UserList';

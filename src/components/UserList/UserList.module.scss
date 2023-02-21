@@ -1,6 +1,23 @@
 .user-list {
-	list-style-type: none;
-	display: grid;
-	grid-template-rows: 50px;
-	grid-template-columns: repeat(10, minmax(150px, 1fr));
+	width: fit-content;
+	border: 2px solid white;
+	border-collapse: collapse;
+	td {
+		width: 200px;
+		border: 1px solid white;
+		input {
+			margin-left: -15px;
+		}
+		label {
+			margin-left: 15px;
+		}
+	}
+}
+@media (prefers-color-scheme: light) {
+	.user-list {
+		border: 2px solid black;
+		td {
+			border: 2px solid black;
+		}
+	}
 }

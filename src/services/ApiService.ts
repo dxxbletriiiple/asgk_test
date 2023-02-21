@@ -45,7 +45,7 @@ export class ApiService {
 		const res = await fetch(`${this._baseUrl}/v1/${token}/passes`, params).then((r) => r.json());
 
 		const arr = await res.passes.map(this._tarnsformCard);
-		console.log(arr[0]);
+		console.log(arr);
 	};
 
 	_tarnsformCard = (card: any) => {

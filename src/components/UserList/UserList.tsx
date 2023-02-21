@@ -15,20 +15,60 @@ export const UserList = (): JSX.Element => {
 		userId: 953237,
 	};
 	return (
-		<ul className={styles['user-list']}>
-			<li>
-				<span>id</span>
-				<span>Имя</span>
-				<span>Фамилия</span>
-				<span>Отчество</span>
-				<span>Дата рождения</span>
-				<span>Email</span>
-				<span>Тел</span>
-				<span>Бонусы</span>
-				<span>Скидка %</span>
-				<span>Дата создания</span>
-			</li>
-			<UserListItem user={x} />
-		</ul>
+		<>
+			<table className={styles['user-list']}>
+				<thead>
+					<tr>
+						<td>
+							<input type='radio' name='sort' id='id' />
+							<label htmlFor='id'>id</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='name' />
+							<label htmlFor='name'>Имя</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='lastname' />
+							<label htmlFor='lastname'>Фамилия</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='middlename' />
+							<label htmlFor='middlename'>Отчество</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='birthday' />
+							<label htmlFor='birthday'>Дата рождения</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='email' />
+							<label htmlFor='email'>Email</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='tel' />
+							<label htmlFor='tel'>Тел</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='bonus' />
+							<label htmlFor='bonus'>Бонусы</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='discount' />
+							<label htmlFor='discount'>Скидка %</label>
+						</td>
+						<td>
+							<input type='radio' name='sort' id='created' />
+							<label htmlFor='created'>Дата создания</label>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<UserListItem user={x} />
+					<UserListItem user={x} />
+					<UserListItem user={x} />
+					<UserListItem user={x} />
+					<UserListItem user={x} />
+				</tbody>
+			</table>
+		</>
 	);
 };
