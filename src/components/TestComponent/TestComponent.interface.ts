@@ -21,3 +21,66 @@ export interface HeadCell {
 }
 
 export type Order = 'asc' | 'desc';
+
+export const headCells: readonly HeadCell[] = [
+	{
+		id: 'userId',
+		numeric: false,
+		disablePadding: true,
+		label: 'id',
+	},
+	{
+		id: 'name',
+		numeric: true,
+		disablePadding: false,
+		label: 'Имя',
+	},
+	{
+		id: 'lastName',
+		numeric: true,
+		disablePadding: false,
+		label: 'Фамилия',
+	},
+	{
+		id: 'middleName',
+		numeric: true,
+		disablePadding: false,
+		label: 'Отчество',
+	},
+	{
+		id: 'birthday',
+		numeric: true,
+		disablePadding: false,
+		label: 'Дата рождения',
+	},
+	{
+		id: 'email',
+		numeric: true,
+		disablePadding: false,
+		label: 'Email',
+	},
+	{
+		id: 'phone',
+		numeric: true,
+		disablePadding: false,
+		label: 'Тел',
+	},
+	{
+		id: 'bonus',
+		numeric: true,
+		disablePadding: false,
+		label: 'Бонусы',
+	},
+	{
+		id: 'discount',
+		numeric: true,
+		disablePadding: false,
+		label: 'Скидка %',
+	},
+	{
+		id: 'createdAt',
+		numeric: true,
+		disablePadding: false,
+		label: 'Дата создания',
+	},
+];

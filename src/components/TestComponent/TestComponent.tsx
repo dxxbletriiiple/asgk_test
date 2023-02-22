@@ -22,84 +22,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { stableSort, getComparator, createData } from '../../utils/uils';
 import { IUSer } from 'components/UserListItem/UserListItem.interface';
-import { EnhancedTableToolbarProps, EnhancedTableProps, HeadCell, Order } from './TestComponent.interface';
+import { EnhancedTableToolbarProps, EnhancedTableProps, HeadCell, Order, headCells } from './TestComponent.interface';
 import { ApiService } from '../../services/ApiService';
 import { cardsContext } from '../../context/context';
-
-const rows = [
-	createData(1, 'Cupcake', '305', '3.7', '10.01.1990', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(2, 'Cupcake', '3005', '3.7', '25.02.1990', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(3, 'Cupcake', '305', '3.7', '65.01.1990', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(4, 'Cupcake', '305', '3.7', '98.01.1990', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(5, 'Cupcake', '305', '3.7', '987', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(5, 'Cupcake', '305', '3.7', '987', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(5, 'Cupcake', '305', '3.7', '987', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(5, 'Cupcake', '305', '3.7', '987', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-	createData(5, 'Cupcake', '305', '3.7', '987', '4.3', 'asd', 'dic', 'asdas', 'asdasd'),
-];
-
-const headCells: readonly HeadCell[] = [
-	{
-		id: 'userId',
-		numeric: false,
-		disablePadding: true,
-		label: 'id',
-	},
-	{
-		id: 'name',
-		numeric: true,
-		disablePadding: false,
-		label: 'Имя',
-	},
-	{
-		id: 'lastName',
-		numeric: true,
-		disablePadding: false,
-		label: 'Фамилия',
-	},
-	{
-		id: 'middleName',
-		numeric: true,
-		disablePadding: false,
-		label: 'Отчество',
-	},
-	{
-		id: 'birthday',
-		numeric: true,
-		disablePadding: false,
-		label: 'Дата рождения',
-	},
-	{
-		id: 'email',
-		numeric: true,
-		disablePadding: false,
-		label: 'Email',
-	},
-	{
-		id: 'phone',
-		numeric: true,
-		disablePadding: false,
-		label: 'Тел',
-	},
-	{
-		id: 'bonus',
-		numeric: true,
-		disablePadding: false,
-		label: 'Бонусы',
-	},
-	{
-		id: 'discount',
-		numeric: true,
-		disablePadding: false,
-		label: 'Скидка %',
-	},
-	{
-		id: 'createdAt',
-		numeric: true,
-		disablePadding: false,
-		label: 'Дата создания',
-	},
-];
 
 function EnhancedTableHead(props: EnhancedTableProps) {
 	const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -198,10 +123,8 @@ export function EnhancedTable() {
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-	console.log(cards);
-
 	React.useEffect(() => {
-		api.getCards().then(setRows);
+		api.getCards('', '').then(setRows);
 	}, []);
 
 	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IUSer) => {

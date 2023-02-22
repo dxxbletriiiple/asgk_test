@@ -11,7 +11,7 @@ export class ApiService {
 			body: JSON.stringify({ login, password }),
 		};
 
-		fetch(`${this._baseUrl}test-auth-only`, requestOptions)
+		return fetch(`${this._baseUrl}test-auth-only`, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
 				this._authKey = data?.auth_token;
@@ -29,30 +29,30 @@ export class ApiService {
 			},
 		};
 
-		fetch(`${this._baseUrl}v1/authorization`, params)
+		return fetch(`${this._baseUrl}v1/authorization`, params)
 			.then((res) => res.json())
 			.then((r) => {
 				this._authToken = r.tokens[0].token;
-				this.getCards();
+				return true;
 			})
 			.catch((err: Error) => {
-				//! TODO authorization
+				console.error(err);
+				return false;
 			});
 	};
 
-	getCards = async () => {
+	getCards = async (key: string, token: string) => {
 		const params = {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 				// prettier-ignore
-				'Authorization': this._authKey,
+				'Authorization': key,
 			},
 		};
-		const res = await fetch(`${this._baseUrl}/v1/${this._authToken}/passes`, params).then((r) => r.json());
+		const res = await fetch(`${this._baseUrl}/v1/${token}/passes`, params).then((r) => r.json());
 
 		const arr = await res.passes.map(this._tarnsformCard);
-		console.log(arr);
 		return arr;
 	};
 

@@ -1,6 +1,9 @@
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ApiService } from '../../services/ApiService';
 import './Login.scss';
+
+const apiData = new ApiService();
 
 type FormFields = {
 	login: HTMLInputElement;
@@ -8,14 +11,20 @@ type FormFields = {
 };
 
 export const Login = (): JSX.Element => {
-	const apiData = new ApiService();
+	const navigate = useNavigate();
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement & FormFields>) => {
 		e.preventDefault();
 		const login: string = e.currentTarget.login.value;
 		const password: string = e.currentTarget.password.value;
 
 		if (login.trim() && password.trim()) {
-			apiData.getAuthKey(login, password);
+			apiData
+				.getAuthKey(login, password)
+				.then(() => navigate('/cards'))
+				.catch((err) => {
+					console.error(err);
+				});
 			e.currentTarget.reset();
 		}
 	};
