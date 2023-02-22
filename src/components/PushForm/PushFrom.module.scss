@@ -1,0 +1,30 @@
+.push-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	transition: 0.3s all ease;
+	border-radius: 5px;
+	border: 1px solid white;
+	height: 500px;
+	width: 400px;
+}
+
+.label {
+	display: flex;
+	flex-direction: column;
+	font-size: 18px;
+	line-height: 20px;
+	margin-bottom: 30px;
+}
+
+.input {
+	margin-top: 10px;
+	width: 300px;
+	height: 50px;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	padding: 5px 15px;
+	font-size: 18px;
+}

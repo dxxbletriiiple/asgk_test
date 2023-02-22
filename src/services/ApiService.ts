@@ -59,6 +59,26 @@ export class ApiService {
 		return arr;
 	};
 
+	pushMessage = async (key: string, token: string, ids: string, msg: string) => {
+		const params = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				//prettier-ignore
+				'Authorization': key,
+			},
+			body: JSON.stringify({
+				user_ids: ids,
+				date_start: new Date().toString(),
+				push_message: msg,
+			}),
+		};
+		fetch(`${this._baseUrl}v1/${token}/message/push`, params)
+			.then((r) => r.json())
+			.then((r) => console.log(r.code, r))
+			.catch((e) => console.error(e));
+	};
+
 	_tarnsformCard = (card: any): IUSer => {
 		return {
 			userId: card.user_id,
