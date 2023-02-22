@@ -1,9 +1,15 @@
-import { IUSer } from '../components/UserListItem/UserListItem.interface';
+import { IUSer } from '../components/Table/Table.interface';
 
 export class ApiService {
 	_baseUrl: string = 'https://api.asgk-group.ru/';
-	_authKey: string = '';
-	_authToken: string = '';
+	_key = '';
+	_token = '';
+
+	getKeyAndToken = async (login: string, password: string) => {
+		this._key = await this.getAuthKey(login, password);
+		this._token = await this.getAuthToken(this._key);
+		return { key: this._key, token: this._token };
+	};
 
 	getAuthKey = async (login: string = 'asd', password: string = 'adsads') => {
 		const requestOptions = {
@@ -14,8 +20,7 @@ export class ApiService {
 		return fetch(`${this._baseUrl}test-auth-only`, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
-				this._authKey = data?.auth_token;
-				this.getAuthToken(this._authKey);
+				return data?.auth_token;
 			});
 	};
 
@@ -32,12 +37,10 @@ export class ApiService {
 		return fetch(`${this._baseUrl}v1/authorization`, params)
 			.then((res) => res.json())
 			.then((r) => {
-				this._authToken = r.tokens[0].token;
-				return true;
+				return r.tokens[0].token;
 			})
 			.catch((err: Error) => {
 				console.error(err);
-				return false;
 			});
 	};
 

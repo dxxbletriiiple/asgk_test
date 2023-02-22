@@ -1,5 +1,7 @@
 import { FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { addKey, addToken } from '../../reducers/reducer';
 import { ApiService } from '../../services/ApiService';
 import './Login.scss';
 
@@ -12,6 +14,7 @@ type FormFields = {
 
 export const Login = (): JSX.Element => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement & FormFields>) => {
 		e.preventDefault();
@@ -20,8 +23,14 @@ export const Login = (): JSX.Element => {
 
 		if (login.trim() && password.trim()) {
 			apiData
-				.getAuthKey(login, password)
-				.then(() => navigate('/cards'))
+				.getKeyAndToken(login, password)
+				.then(({ key, token }) => {
+					if (key && token) {
+						dispatch(addKey(key));
+						dispatch(addToken(token));
+						navigate('/cards');
+					}
+				})
 				.catch((err) => {
 					console.error(err);
 				});

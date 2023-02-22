@@ -1,4 +1,15 @@
-import { IUSer } from '../UserListItem/UserListItem.interface';
+export interface IUSer {
+	birthday: string;
+	bonus: string;
+	createdAt: string;
+	discount: string;
+	email: string;
+	lastName: string;
+	middleName: string;
+	name: string;
+	phone: string;
+	userId: number;
+}
 
 export interface EnhancedTableToolbarProps {
 	numSelected: number;

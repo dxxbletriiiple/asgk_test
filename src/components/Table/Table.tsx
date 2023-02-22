@@ -20,11 +20,11 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { stableSort, getComparator, createData } from '../../utils/uils';
-import { IUSer } from 'components/UserListItem/UserListItem.interface';
-import { EnhancedTableToolbarProps, EnhancedTableProps, HeadCell, Order, headCells } from './TestComponent.interface';
+import { useSelector } from 'react-redux';
+import { stableSort, getComparator } from '../../utils/uils';
+import { IUSer, EnhancedTableToolbarProps, EnhancedTableProps, HeadCell, Order, headCells } from './Table.interface';
 import { ApiService } from '../../services/ApiService';
-import { cardsContext } from '../../context/context';
+import { useNavigate } from 'react-router-dom';
 
 function EnhancedTableHead(props: EnhancedTableProps) {
 	const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -114,7 +114,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 const api = new ApiService();
 
 export function EnhancedTable() {
-	const cards = React.useContext(cardsContext);
 	const [rows, setRows] = React.useState([]);
 	const [order, setOrder] = React.useState<Order>('asc');
 	const [orderBy, setOrderBy] = React.useState<keyof IUSer>('name');
@@ -122,9 +121,15 @@ export function EnhancedTable() {
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const navigate = useNavigate();
+
+	const keyAndToken = useSelector((state) => state.keyAndToken);
 
 	React.useEffect(() => {
-		api.getCards('', '').then(setRows);
+		if (!keyAndToken.key || !keyAndToken.token) {
+			return navigate('/login');
+		}
+		api.getCards(keyAndToken.key, keyAndToken.token).then(setRows);
 	}, []);
 
 	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IUSer) => {

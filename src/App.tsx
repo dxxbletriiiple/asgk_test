@@ -1,24 +1,15 @@
-import { useContext, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { Login } from './components/Login/Login';
 import { LoginPage } from './pages/LoginPage';
-import { UserList } from './components/UserList/UserList';
-import { cardsContext, IContext } from './context/context';
-import { EnhancedTable } from './components/TestComponent/TestComponent';
+import { EnhancedTable } from './components/Table/Table';
+import { store } from './store/store';
 import './App.scss';
 
-const { Provider } = cardsContext;
-
 function App() {
-	const [cards, setCards] = useState([]);
-
-	const onChangeState = (st: any) => {
-		setCards(st);
-	};
-
 	return (
 		<div className='App'>
-			<Provider value={{ cards, onChangeState }}>
+			<Provider store={store}>
 				<Router>
 					<Routes>
 						<Route path='/' element={<LoginPage />} />

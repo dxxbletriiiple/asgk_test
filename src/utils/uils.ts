@@ -1,5 +1,4 @@
-import { IUSer } from '../components/UserListItem/UserListItem.interface';
-import { Order } from '../components/TestComponent/TestComponent.interface';
+import { IUSer, Order } from '../components/Table/Table.interface';
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
 		return -1;
