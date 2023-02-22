@@ -26,7 +26,7 @@ export const PushForm = ({ marker, isOpen, onClose }: IPushForm): JSX.Element | 
 const api = new ApiService();
 
 const View = () => {
-	const keyAndToken = useSelector((state) => state.keyAndToken);
+	const keyAndToken = useSelector((state: any) => state.keyAndToken);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement & FormFields>): void => {
 		e.preventDefault();

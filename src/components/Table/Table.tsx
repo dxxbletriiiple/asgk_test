@@ -123,7 +123,7 @@ export function EnhancedTable() {
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 	const navigate = useNavigate();
 
-	const keyAndToken = useSelector((state) => state.keyAndToken);
+	const keyAndToken = useSelector((state: any) => state.keyAndToken);
 
 	React.useEffect(() => {
 		if (!keyAndToken.key || !keyAndToken.token) {
@@ -149,21 +149,22 @@ export function EnhancedTable() {
 		setSelected([]);
 	};
 
-	const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-		const selectedIndex = selected.indexOf(name);
-		let newSelected: readonly string[] = [];
+	const handleClick = (event: React.MouseEvent<unknown>, name: string | number) => {
+		if (typeof name == 'string') {
+			const selectedIndex = selected.indexOf(name);
+			let newSelected: readonly string[] = [];
 
-		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, name);
-		} else if (selectedIndex === 0) {
-			newSelected = newSelected.concat(selected.slice(1));
-		} else if (selectedIndex === selected.length - 1) {
-			newSelected = newSelected.concat(selected.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+			if (selectedIndex === -1) {
+				newSelected = newSelected.concat(selected, name);
+			} else if (selectedIndex === 0) {
+				newSelected = newSelected.concat(selected.slice(1));
+			} else if (selectedIndex === selected.length - 1) {
+				newSelected = newSelected.concat(selected.slice(0, -1));
+			} else if (selectedIndex > 0) {
+				newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+			}
+			setSelected(newSelected);
 		}
-
-		setSelected(newSelected);
 	};
 
 	const handleChangePage = (event: unknown, newPage: number) => {
@@ -179,7 +180,9 @@ export function EnhancedTable() {
 		setDense(event.target.checked);
 	};
 
-	const isSelected = (name: string) => selected.indexOf(name) !== -1;
+	const isSelected = (name: string | number) => {
+		if (typeof name == 'string') return selected.indexOf(name) !== -1;
+	};
 
 	const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -206,7 +209,7 @@ export function EnhancedTable() {
 									return (
 										<TableRow
 											hover
-											onClick={(event) => handleClick(event, row.name)}
+											onClick={(event: React.MouseEvent<unknown>) => handleClick(event, row.name)}
 											role='checkbox'
 											aria-checked={isItemSelected}
 											tabIndex={-1}
